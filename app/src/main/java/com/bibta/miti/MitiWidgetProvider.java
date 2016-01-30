@@ -23,7 +23,7 @@ public class MitiWidgetProvider extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.time, time);
 
         // english date
-        String engDate = calendar.get(Calendar.DATE)+"";
+        String engDate = calendar.get(Calendar.DAY_OF_MONTH)+"";
         remoteViews.setTextViewText(R.id.engDate, engDate);
         String engMonthYear = calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
                 + "\n" + calendar.get(Calendar.YEAR);
@@ -33,7 +33,12 @@ public class MitiWidgetProvider extends AppWidgetProvider {
         String day = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
         remoteViews.setTextViewText(R.id.day, day);
 
-        // TODO: Nepali date
+        // nepali date
+        NepaliDate.Date nepDate = new NepaliDate.Date(calendar).convertToNepali();
+        String nepMonthYear = NepaliTranslator.getMonth(nepDate.month) + "\n" +
+                NepaliTranslator.getNumber(nepDate.year + "");
+        remoteViews.setTextViewText(R.id.nepMonthYear, nepMonthYear);
+        remoteViews.setTextViewText(R.id.nepDate, NepaliTranslator.getNumber(nepDate.day + ""));
 
 
         // Set alarm for update in next minute
@@ -59,6 +64,12 @@ public class MitiWidgetProvider extends AppWidgetProvider {
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_miti);
             updateWidget(context, remoteViews);
+
+            // Register an onClickListener to launch MainActivity
+            Intent intent1 = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
+
 
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
