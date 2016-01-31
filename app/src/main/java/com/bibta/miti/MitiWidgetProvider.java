@@ -7,6 +7,11 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.widget.RemoteViews;
 
@@ -15,6 +20,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class MitiWidgetProvider extends AppWidgetProvider {
+
     public static void updateWidget(Context context, RemoteViews remoteViews) {
         Calendar calendar = Calendar.getInstance();
 

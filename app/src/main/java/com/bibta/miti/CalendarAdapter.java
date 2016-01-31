@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class NepaliCalendarAdapter extends BaseAdapter {
+public class CalendarAdapter extends BaseAdapter {
     private Date mDate;
     private Date mToday;
     private int mExtraDays = 0;
     private final Context mContext;
 
-    public NepaliCalendarAdapter(Context context, Date date) {
+    public CalendarAdapter(Context context, Date date) {
         mContext = context;
         changeDate(date);
     }
@@ -49,10 +50,19 @@ public class NepaliCalendarAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
-        if (convertView == null)
+        if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_date, parent, false);
+
+            if (position>=mExtraDays+7)
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Date selected = new Date(mDate.year, mDate.month, position-mExtraDays-7+1);
+                }
+            });
+        }
 
         TextView textView1 = (TextView)convertView.findViewById(R.id.nepaliDate);
         TextView textView2 = (TextView)convertView.findViewById(R.id.englishDate);
@@ -73,7 +83,6 @@ public class NepaliCalendarAdapter extends BaseAdapter {
             String dt2 = new Date(mDate.year, mDate.month, dt).convertToEnglish().day + "";
             textView2.setText(dt2);
             textView2.setVisibility(View.VISIBLE);
-
         }
         else {
             textView1.setText("");

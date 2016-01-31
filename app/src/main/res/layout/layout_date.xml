@@ -15,10 +15,8 @@
         android:id="@+id/nepaliDate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="-8dp"
-        android:paddingTop="-4dp"
         android:gravity="center"
-        android:textSize="13sp"
+        android:textSize="11sp"
         android:text="17"/>
 
     <TextView
