@@ -34,14 +34,14 @@ public class MitiWidgetProvider extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.day, day);
 
         // nepali date
-        NepaliDate.Date nepDate = new NepaliDate.Date(calendar).convertToNepali();
+        Date nepDate = new Date(calendar).convertToNepali();
         String nepMonthYear = NepaliTranslator.getMonth(nepDate.month) + "\n" +
                 NepaliTranslator.getNumber(nepDate.year + "");
         remoteViews.setTextViewText(R.id.nepMonthYear, nepMonthYear);
         remoteViews.setTextViewText(R.id.nepDate, NepaliTranslator.getNumber(nepDate.day + ""));
 
 
-        // Set alarm for update in next minute
+        // Set alarm to update in next minute
         int timeTillNextMinute = (60 - calendar.get(Calendar.SECOND)) * 1000;
         Intent intent = new Intent(context, MitiWidgetProvider.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);

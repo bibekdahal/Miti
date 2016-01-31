@@ -15,7 +15,7 @@
         android:layout_height="40dp"
         android:textSize="30sp"
         android:gravity="center"
-        android:text="मिति"/>
+        android:text="@string/app_name_nepali"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,27 +23,43 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/prevMonth"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:textStyle="bold"
-            android:text="&#8592;"/>
+            android:text="@string/left_arrow"/>
         <View
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <Button
             android:id="@+id/nextMonth"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:textStyle="bold"
-            android:text="&#8594;"/>
+            android:text="@string/right_arrow"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"/>
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/nepaliMonthYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/englishMonthYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+    </LinearLayout>
+
     <GridView
         android:id="@+id/calendar"
         android:numColumns="7"
@@ -51,5 +67,10 @@
         android:layout_height="wrap_content">
 
     </GridView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>

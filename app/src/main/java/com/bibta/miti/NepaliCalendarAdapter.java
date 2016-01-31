@@ -1,40 +1,40 @@
 package com.bibta.miti;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
 
 public class NepaliCalendarAdapter extends BaseAdapter {
-    private NepaliDate.Date mDate;
-    private NepaliDate.Date mToday;
+    private Date mDate;
+    private Date mToday;
     private int mExtraDays = 0;
     private final Context mContext;
 
-    public NepaliCalendarAdapter(Context context, NepaliDate.Date date) {
+    public NepaliCalendarAdapter(Context context, Date date) {
         mContext = context;
         changeDate(date);
     }
 
-    public void changeDate(NepaliDate.Date date) {
+    public void changeDate(Date date) {
         mDate = date;
 
-        NepaliDate.Date temp = new NepaliDate.Date(mDate.year, mDate.month, 1);
+        Date temp = new Date(mDate.year, mDate.month, 1);
         Calendar engCalendar = temp.convertToEnglish().getCalendar();
         mExtraDays = engCalendar.get(Calendar.DAY_OF_WEEK)-1;
         notifyDataSetInvalidated();
 
-        mToday = new NepaliDate.Date(Calendar.getInstance()).convertToNepali();
+        mToday = new Date(Calendar.getInstance()).convertToNepali();
     }
 
     @Override
     public int getCount() {
-        return NepaliDate.getNumDays(mDate.year, mDate.month)
+        return DateUtils.getNumDays(mDate.year, mDate.month)
                 + mExtraDays + 7;
     }
 
@@ -50,42 +50,61 @@ public class NepaliCalendarAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView textView;
-        if (convertView == null ) {
-            textView = new TextView(mContext);
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(14);
-            textView.setPadding(2, 2, 2, 2);
-        }
-        else
-            textView = (TextView)convertView;
 
+        if (convertView == null)
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_date, parent, false);
+
+        TextView textView1 = (TextView)convertView.findViewById(R.id.nepaliDate);
+        TextView textView2 = (TextView)convertView.findViewById(R.id.englishDate);
+        ImageView imageView = (ImageView)convertView.findViewById(R.id.circle_back);
+
+        // Set text
+
+        // Day headers
         if (position < 7) {
-            textView.setText(NepaliTranslator.getShortDay(position));
+            textView1.setText(NepaliTranslator.getShortDay(position));
+            textView2.setVisibility(View.GONE);
         }
+        // Days
         else if (position >= mExtraDays+7) {
-            String date = NepaliTranslator.getNumber("" + (position + 1 - mExtraDays - 7));
-            textView.setText(date);
+            int dt = (position + 1 - mExtraDays - 7);
+            textView1.setText(NepaliTranslator.getNumber(dt + ""));
+
+            String dt2 = new Date(mDate.year, mDate.month, dt).convertToEnglish().day + "";
+            textView2.setText(dt2);
+            textView2.setVisibility(View.VISIBLE);
+
         }
-        else
-            textView.setText("");
+        else {
+            textView1.setText("");
+            textView2.setVisibility(View.GONE);
+        }
 
+        // Set background and colors
 
+        imageView.setVisibility(View.GONE);
+
+        // Day headers
         if (position < 7) {
-            textView.setBackgroundColor(Color.parseColor("#BB000000"));
-            textView.setTextColor(Color.parseColor("#BBFFFFFF"));
-        } else {
-            textView.setBackgroundColor(Color.parseColor("#333333"));
+            convertView.setBackgroundColor(0xBB000000);
+            textView1.setTextColor(0xBBFFFFFF);
+            textView1.setPadding(0,0,0,0);
+        }
 
+        // Days
+        else {
+            convertView.setBackgroundColor(0xFF333333);
+            if (position % 7 == 6)
+                textView1.setTextColor(0xFFFF0000);
+            else
+                textView1.setTextColor(0xFFFFFFFF);
+
+            // Today
             if (mDate.year == mToday.year && mDate.month == mToday.month
                     && position == mToday.day-1+7+mExtraDays)
-                textView.setTextColor(Color.parseColor("#FFDF00"));
-            else if (position % 7 == 6)
-                textView.setTextColor(Color.parseColor("#FF0000"));
-            else
-                textView.setTextColor(Color.parseColor("#FFFFFF"));
+                imageView.setVisibility(View.VISIBLE);
         }
 
-        return textView;
+        return convertView;
     }
 }
