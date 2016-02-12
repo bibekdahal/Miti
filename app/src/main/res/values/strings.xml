@@ -1,7 +1,4 @@
 <resources>
     <string name="app_name">Miti</string>
     <string name="app_name_nepali">मिति</string>
-
-    <string name="left_arrow">←</string>
-    <string name="right_arrow">→</string>
 </resources>

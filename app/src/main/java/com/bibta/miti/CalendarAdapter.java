@@ -1,6 +1,7 @@
 package com.bibta.miti;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,26 +94,26 @@ public class CalendarAdapter extends BaseAdapter {
 
         imageView.setVisibility(View.GONE);
 
-        // Day headers
         if (position < 7) {
-            convertView.setBackgroundColor(0xBB000000);
-            textView1.setTextColor(0xBBFFFFFF);
-            textView1.setPadding(0,0,0,0);
+            textView1.setBackgroundResource(R.drawable.border_bottom);
+        } else {
+            textView1.setBackgroundResource(0);
         }
 
-        // Days
+        // convertView.setBackgroundColor(0xFF444444);
+        if (position % 7 == 6) {
+            textView1.setTextColor(0xFF888888);
+            textView2.setTextColor(0xFF888888);
+        }
         else {
-            convertView.setBackgroundColor(0xFF333333);
-            if (position % 7 == 6)
-                textView1.setTextColor(0xFFFF0000);
-            else
-                textView1.setTextColor(0xFFFFFFFF);
-
-            // Today
-            if (mDate.year == mToday.year && mDate.month == mToday.month
-                    && position == mToday.day-1+7+mExtraDays)
-                imageView.setVisibility(View.VISIBLE);
+            textView1.setTextColor(0xFFFFFFFF);
+            textView2.setTextColor(0xFFAAAAAA);
         }
+
+        // Today
+        if (mDate.year == mToday.year && mDate.month == mToday.month
+                && position == mToday.day-1+7+mExtraDays)
+            imageView.setVisibility(View.VISIBLE);
 
         return convertView;
     }

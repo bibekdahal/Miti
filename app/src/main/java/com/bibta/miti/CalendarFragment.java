@@ -36,31 +36,6 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
-    public void next() {
-        if (mCurrentDate.month == 12) {
-            mCurrentDate.year++;
-            mCurrentDate.month = 1;
-        }
-        else
-            mCurrentDate.month++;
-
-        mAdapter.changeDate(mCurrentDate);
-
-        changeTitle(getView());
-    }
-
-    public void previous() {
-        if (mCurrentDate.month == 1) {
-            mCurrentDate.year--;
-            mCurrentDate.month = 12;
-        } else
-            mCurrentDate.month--;
-
-        mAdapter.changeDate(mCurrentDate);
-
-        changeTitle(getView());
-    }
-
     private void changeTitle(View view) {
         String nepali = NepaliTranslator.getNumber(mCurrentDate.year + "") + " "
                 + NepaliTranslator.getMonth(mCurrentDate.month);

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="40dp">
+    android:layout_height="50dp">
 
     <ImageView
         android:id="@+id/circle_back"
@@ -16,7 +16,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textSize="11sp"
+        android:textSize="15sp"
+        android:paddingRight="7dp"
+        android:paddingBottom="7dp"
         android:text="17"/>
 
     <TextView
@@ -25,7 +27,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom|end"
         android:padding="7dp"
-        android:textSize="7sp"
+        android:textSize="12sp"
         android:text="15"/>
 
 </RelativeLayout>
