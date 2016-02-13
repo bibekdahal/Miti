@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/calendarPadding"
-    android:paddingRight="@dimen/calendarPadding">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:padding="5dp"
@@ -14,6 +13,8 @@
             android:id="@+id/nepaliMonthYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:gravity="center"/>
         <View
             android:layout_width="0dp"
@@ -24,6 +25,8 @@
             android:id="@+id/englishMonthYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:gravity="center"/>
     </LinearLayout>
 
