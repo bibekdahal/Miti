@@ -8,26 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarPagerAdapter extends FragmentStatePagerAdapter {
-    public static final List<Fragment> fragments = new ArrayList<>();
     public CalendarPagerAdapter(FragmentManager manager) {
         super(manager);
-
-        for (int i=0; i<=90; ++i) {
-            for (int j=1; j<=12; ++j) {
-                CalendarFragment cf = new CalendarFragment();
-                cf.set(i+DateUtils.startNepaliYear, j);
-                fragments.add(cf);
-            }
-        }
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        int year = position/12 + DateUtils.startNepaliYear;
+        int month = position%12 + 1;
+        CalendarFragment cf = new CalendarFragment();
+        cf.set(year, month);
+        return cf;
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
+        return 91*12;
     }
 }

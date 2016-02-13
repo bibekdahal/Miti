@@ -1,15 +1,20 @@
 package com.bibta.miti;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 
 public class CalendarAdapter extends BaseAdapter {
@@ -51,22 +56,28 @@ public class CalendarAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_date, parent, false);
 
-            if (position>=mExtraDays+7)
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Date selected = new Date(mDate.year, mDate.month, position-mExtraDays-7+1);
-                }
-            });
+            if (position>=mExtraDays+7) {
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Date selected = new Date(mDate.year, mDate.month, position - mExtraDays - 7 + 1);
+                    }
+                });
+
+                int[] attrs = new int[]{R.attr.selectableItemBackground};
+                TypedArray typedArray = mContext.obtainStyledAttributes(attrs);
+                int backgroundResource = typedArray.getResourceId(0, 0);
+                convertView.setBackgroundResource(backgroundResource);
+                typedArray.recycle();
+            }
         }
 
-        TextView textView1 = (TextView)convertView.findViewById(R.id.nepaliDate);
-        TextView textView2 = (TextView)convertView.findViewById(R.id.englishDate);
+        final TextView textView1 = (TextView)convertView.findViewById(R.id.nepaliDate);
+        final TextView textView2 = (TextView)convertView.findViewById(R.id.englishDate);
         ImageView imageView = (ImageView)convertView.findViewById(R.id.circle_back);
 
         // Set text
@@ -100,7 +111,7 @@ public class CalendarAdapter extends BaseAdapter {
             textView1.setBackgroundResource(0);
         }
 
-        // convertView.setBackgroundColor(0xFF444444);
+        // rootView.setBackgroundColor(0xFF444444);
         if (position % 7 == 6) {
             textView1.setTextColor(0xFF888888);
             textView2.setTextColor(0xFF888888);
@@ -114,6 +125,27 @@ public class CalendarAdapter extends BaseAdapter {
         if (mDate.year == mToday.year && mDate.month == mToday.month
                 && position == mToday.day-1+7+mExtraDays)
             imageView.setVisibility(View.VISIBLE);
+
+
+        // Set view height equal to width and text size respectively
+
+        final View finalRootView = convertView;
+        convertView.post(new Runnable() {
+            @Override
+            public void run() {
+
+                // Set height == width
+                ViewGroup.LayoutParams params = finalRootView.getLayoutParams();
+                params.height = finalRootView.getWidth()+2;
+
+                // Set text size
+                textView1.setTextSize(params.height*12f/50);
+                textView2.setTextSize(params.height*7f/50);
+
+                finalRootView.setLayoutParams(params);
+                finalRootView.invalidate();
+            }
+        });
 
         return convertView;
     }

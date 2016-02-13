@@ -2,6 +2,8 @@ package com.bibta.miti;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,11 @@ public class CalendarFragment extends Fragment {
 
         mCalendar = (GridView)view.findViewById(R.id.calendar);
         mCalendar.setAdapter(mAdapter);
+
+        // Set vertical spacing of calendar according to display height
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        mCalendar.setVerticalSpacing((int)(metrics.heightPixels/800f*17f));
 
         return view;
     }
