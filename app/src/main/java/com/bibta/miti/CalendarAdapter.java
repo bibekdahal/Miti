@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,8 +140,8 @@ public class CalendarAdapter extends BaseAdapter {
                 params.height = finalRootView.getWidth()+2;
 
                 // Set text size
-                textView1.setTextSize(params.height*12f/50);
-                textView2.setTextSize(params.height*7f/50);
+                textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, params.height*12f/50);
+                textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, params.height*7f/50);
 
                 finalRootView.setLayoutParams(params);
                 finalRootView.invalidate();
