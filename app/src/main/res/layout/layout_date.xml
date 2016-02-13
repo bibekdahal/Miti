@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:paddingRight="7dp"
         android:paddingBottom="7dp"
         android:text="१७"/>
@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom|end"
         android:padding="7dp"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:text="15"/>
 
 </RelativeLayout>

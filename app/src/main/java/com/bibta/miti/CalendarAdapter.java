@@ -138,10 +138,12 @@ public class CalendarAdapter extends BaseAdapter {
                 // Set height == width
                 ViewGroup.LayoutParams params = finalRootView.getLayoutParams();
                 params.height = finalRootView.getWidth()+2;
+/*
 
                 // Set text size
                 textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, params.height*12f/50);
                 textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, params.height*7f/50);
+*/
 
                 finalRootView.setLayoutParams(params);
                 finalRootView.invalidate();
