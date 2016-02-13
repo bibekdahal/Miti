@@ -4,7 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/monthYear"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+    <!--LinearLayout
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +36,9 @@
             android:textSize="15sp"
             android:textStyle="bold"
             android:gravity="center"/>
-    </LinearLayout>
+    </LinearLayout-->
+
+
 
     <GridView
         android:id="@+id/calendar"

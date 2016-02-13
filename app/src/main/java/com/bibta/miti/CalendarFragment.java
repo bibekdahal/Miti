@@ -47,7 +47,7 @@ public class CalendarFragment extends Fragment {
     private void changeTitle(View view) {
         String nepali = NepaliTranslator.getNumber(mCurrentDate.year + "") + " "
                 + NepaliTranslator.getMonth(mCurrentDate.month);
-        ((TextView)view.findViewById(R.id.nepaliMonthYear)).setText(nepali);
+        //((TextView)view.findViewById(R.id.nepaliMonthYear)).setText(nepali);
 
         Date eDate1 = new Date(mCurrentDate.year, mCurrentDate.month, 1).convertToEnglish();
         Date eDate2 = new Date(mCurrentDate.year, mCurrentDate.month, 26).convertToEnglish();
@@ -55,7 +55,10 @@ public class CalendarFragment extends Fragment {
         String english = getEnglishMonth(eDate1.month) + "/"
                 + getEnglishMonth(eDate2.month);
         english += " " + eDate1.year + (eDate1.year==eDate2.year?"":"/"+eDate2.year);
-        ((TextView)view.findViewById(R.id.englishMonthYear)).setText(english);
+        //((TextView)view.findViewById(R.id.englishMonthYear)).setText(english);
+
+        String monthYear = "<  " + nepali + " / " + english + "  >";
+        ((TextView)view.findViewById(R.id.monthYear)).setText(monthYear);
     }
 
     public static String getEnglishMonth(int month) {
