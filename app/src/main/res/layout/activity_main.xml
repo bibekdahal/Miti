@@ -6,7 +6,6 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,6 +15,9 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/calendarPager"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="@dimen/view_pager_margin"
+            android:layout_marginRight="@dimen/view_pager_margin"
             android:layout_width="0dp"
             android:layout_weight="0.6"
             android:layout_height="match_parent"/>

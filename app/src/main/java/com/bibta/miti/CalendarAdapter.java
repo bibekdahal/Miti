@@ -60,21 +60,6 @@ public class CalendarAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, final ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.layout_date, parent, false);
-
-            if (position>=mExtraDays+7) {
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Date selected = new Date(mDate.year, mDate.month, position - mExtraDays - 7 + 1);
-                    }
-                });
-
-                int[] attrs = new int[]{R.attr.selectableItemBackground};
-                TypedArray typedArray = mContext.obtainStyledAttributes(attrs);
-                int backgroundResource = typedArray.getResourceId(0, 0);
-                convertView.setBackgroundResource(backgroundResource);
-                typedArray.recycle();
-            }
         }
 
         final TextView textView1 = (TextView)convertView.findViewById(R.id.nepaliDate);
@@ -87,6 +72,7 @@ public class CalendarAdapter extends BaseAdapter {
         if (position < 7) {
             textView1.setText(NepaliTranslator.getShortDay(position));
             textView2.setVisibility(View.GONE);
+            convertView.setBackgroundResource(0);
         }
         // Days
         else if (position >= mExtraDays+7) {
@@ -96,10 +82,27 @@ public class CalendarAdapter extends BaseAdapter {
             String dt2 = new Date(mDate.year, mDate.month, dt).convertToEnglish().day + "";
             textView2.setText(dt2);
             textView2.setVisibility(View.VISIBLE);
+
+
+            // Set selectable background and on click listener
+            int[] attrs = new int[]{R.attr.selectableItemBackground};
+            TypedArray typedArray = mContext.obtainStyledAttributes(attrs);
+            int backgroundResource = typedArray.getResourceId(0, 0);
+            convertView.setBackgroundResource(backgroundResource);
+            typedArray.recycle();
+
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Date selected = new Date(mDate.year, mDate.month, position - mExtraDays - 7 + 1);
+                }
+            });
         }
         else {
             textView1.setText("");
             textView2.setVisibility(View.GONE);
+            convertView.setBackgroundResource(0);
         }
 
         // Set background and colors
