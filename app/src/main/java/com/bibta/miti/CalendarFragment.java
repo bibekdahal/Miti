@@ -17,6 +17,7 @@ public class CalendarFragment extends Fragment {
 
     CalendarAdapter mAdapter;
     GridView mCalendar;
+    GridView mCalendarHeaders;
     Date mCurrentDate = new Date(2000, 1, 1);
 
     @Override
@@ -36,10 +37,16 @@ public class CalendarFragment extends Fragment {
         mCalendar = (GridView)view.findViewById(R.id.calendar);
         mCalendar.setAdapter(mAdapter);
 
+        mCalendarHeaders = (GridView)view.findViewById(R.id.calendar_headers);
+        mCalendarHeaders.setAdapter(new CalendarHeaderAdapter(getContext()));
+
         // Set vertical spacing of calendar according to display height
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        mCalendar.setVerticalSpacing((int)(metrics.heightPixels/800f*17f));
+
+        int spacing = (int) (metrics.heightPixels / 800f * 17f);
+        mCalendar.setVerticalSpacing(spacing);
+        mCalendarHeaders.setVerticalSpacing(spacing);
 
         return view;
     }
@@ -47,7 +54,6 @@ public class CalendarFragment extends Fragment {
     private void changeTitle(View view) {
         String nepali = NepaliTranslator.getNumber(mCurrentDate.year + "") + " "
                 + NepaliTranslator.getMonth(mCurrentDate.month);
-        //((TextView)view.findViewById(R.id.nepaliMonthYear)).setText(nepali);
 
         Date eDate1 = new Date(mCurrentDate.year, mCurrentDate.month, 1).convertToEnglish();
         Date eDate2 = new Date(mCurrentDate.year, mCurrentDate.month, 26).convertToEnglish();
@@ -55,9 +61,8 @@ public class CalendarFragment extends Fragment {
         String english = getEnglishMonth(eDate1.month) + "/"
                 + getEnglishMonth(eDate2.month);
         english += " " + eDate1.year + (eDate1.year==eDate2.year?"":"/"+eDate2.year);
-        //((TextView)view.findViewById(R.id.englishMonthYear)).setText(english);
 
-        String monthYear = "<  " + nepali + " / " + english + "  >";
+        String monthYear = nepali + "\n" + english;
         ((TextView)view.findViewById(R.id.monthYear)).setText(monthYear);
     }
 

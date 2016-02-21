@@ -9,13 +9,16 @@
     android:background="#e74c3c">
 
     <TextView
+        android:id="@+id/today_date_nepali"
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="200sp"
         android:layout_gravity="center_horizontal"
         android:text="१"/>
+
     <TextView
+        android:id="@+id/today_month_year_nepali"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,8 +26,8 @@
         android:textSize="50sp"
         android:text="फाल्गुन, २०७२"/>
 
-
     <TextView
+        android:id="@+id/today_date_english"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

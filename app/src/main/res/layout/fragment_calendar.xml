@@ -4,42 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/monthYear"
-        android:padding="5dp"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
-    <!--LinearLayout
-        android:padding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:orientation="horizontal">
+
         <TextView
-            android:id="@+id/nepaliMonthYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:text="@string/less_than"/>
+
+        <TextView
+            android:id="@+id/monthYear"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:textSize="15sp"
             android:textStyle="bold"
             android:gravity="center"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
 
         <TextView
-            android:id="@+id/englishMonthYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-    </LinearLayout-->
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:text="@string/greater_than"/>
+    </RelativeLayout>
 
+    <GridView
+        android:id="@+id/calendar_headers"
+        android:numColumns="7"
+        android:padding="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-
+    </GridView>
     <GridView
         android:id="@+id/calendar"
         android:numColumns="7"
