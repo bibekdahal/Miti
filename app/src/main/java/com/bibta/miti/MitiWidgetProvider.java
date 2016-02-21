@@ -7,11 +7,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.SystemClock;
 import android.widget.RemoteViews;
 
@@ -19,8 +14,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Miti-Widget-Provider for 4x1 default widget.
+ */
 public class MitiWidgetProvider extends AppWidgetProvider {
 
+    /**
+     * Update widget with current date and time.
+     * @param context Application widget context.
+     * @param remoteViews Remote views containing the widget views.
+     */
     public static void updateWidget(Context context, RemoteViews remoteViews) {
         Calendar calendar = Calendar.getInstance();
 
@@ -53,7 +56,8 @@ public class MitiWidgetProvider extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingIntent);
-        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + timeTillNextMinute, pendingIntent);
+        alarm.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
+                + timeTillNextMinute, pendingIntent);
     }
 
 
@@ -68,12 +72,14 @@ public class MitiWidgetProvider extends AppWidgetProvider {
 
         for (int widgetId : allWidgetIds) {
 
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_miti);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
+                    R.layout.widget_miti);
             updateWidget(context, remoteViews);
 
             // Register an onClickListener to launch MainActivity
             Intent intent1 = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
 

@@ -3,7 +3,6 @@ package com.bibta.miti;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,9 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Fragment containing a calendar for a particular year and month.
+ */
 public class CalendarFragment extends Fragment {
 
     CalendarAdapter mAdapter;
@@ -26,14 +28,15 @@ public class CalendarFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    // Inflate the view for the fragment based on layout XML
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
-
-        mAdapter = new CalendarAdapter(getContext(), mCurrentDate);
         changeTitle(view);
 
+        // Initialize grid views
+
+        mAdapter = new CalendarAdapter(getContext(), mCurrentDate);
         mCalendar = (GridView)view.findViewById(R.id.calendar);
         mCalendar.setAdapter(mAdapter);
 
@@ -41,6 +44,7 @@ public class CalendarFragment extends Fragment {
         mCalendarHeaders.setAdapter(new CalendarHeaderAdapter(getContext()));
 
         // Set vertical spacing of calendar according to display height
+
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -66,13 +70,18 @@ public class CalendarFragment extends Fragment {
         ((TextView)view.findViewById(R.id.monthYear)).setText(monthYear);
     }
 
-    public static String getEnglishMonth(int month) {
+    private static String getEnglishMonth(int month) {
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
         calendar.set(Calendar.MONTH, month - 1);
         return calendar.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
     }
 
+    /**
+     * Set year and month for this calendar.
+     * @param year Year to display.
+     * @param month Month to display.
+     */
     public void set(int year, int month) {
         mCurrentDate.year = year;
         mCurrentDate.month = month;

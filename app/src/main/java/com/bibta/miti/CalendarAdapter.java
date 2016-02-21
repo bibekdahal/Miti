@@ -10,17 +10,29 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+/**
+ * Adapter to set contents of calendar grid view.
+ */
 public class CalendarAdapter extends BaseAdapter {
     private Date mDate;
     private Date mToday;
     private int mExtraDays = 0;
     private final Context mContext;
 
+    /**
+     * Create an adapter with given context and date.
+     * @param context Context containing the grid view.
+     * @param date Date containing year and month to display.
+     */
     public CalendarAdapter(Context context, Date date) {
         mContext = context;
         changeDate(date);
     }
 
+    /**
+     * Change calendar to another month.
+     * @param date Date containing year and month to display.
+     */
     public void changeDate(Date date) {
         mDate = date;
 
@@ -49,7 +61,8 @@ public class CalendarAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
+
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext)
                     .inflate(R.layout.layout_date, parent, false);
@@ -79,13 +92,19 @@ public class CalendarAdapter extends BaseAdapter {
 
 
         if (position % 7 == 6) {
-            textView1.setTextColor(0xFF888888);
-            textView2.setTextColor(0xFF888888);
+            textView1.setTextColor(ThemeUtils.getThemeColor(mContext,
+                    android.R.attr.textColorTertiary));
+            textView2.setTextColor(ThemeUtils.getThemeColor(mContext,
+                    android.R.attr.textColorTertiary));
         }
         else {
-            textView1.setTextColor(0xFFFFFFFF);
-            textView2.setTextColor(0xFFAAAAAA);
+            textView1.setTextColor(ThemeUtils.getThemeColor(mContext,
+                    android.R.attr.textColor));
+            textView2.setTextColor(ThemeUtils.getThemeColor(mContext,
+                    android.R.attr.textColorSecondary));
         }
+
+        imageView.setColorFilter(ThemeUtils.getThemeColor(mContext, R.attr.colorAccent));
 
         // Today
         if (mDate.year == mToday.year && mDate.month == mToday.month
