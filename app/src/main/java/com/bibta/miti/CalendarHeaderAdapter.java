@@ -43,22 +43,11 @@ public class CalendarHeaderAdapter extends BaseAdapter {
     public View getView(int position, View convertView, final ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext)
-                    .inflate(R.layout.layout_date, parent, false);
+                    .inflate(R.layout.layout_date_header, parent, false);
         }
 
-        TextView textView1 = (TextView)convertView.findViewById(R.id.nepaliDate);
-        TextView textView2 = (TextView)convertView.findViewById(R.id.englishDate);
-        ImageView imageView = (ImageView)convertView.findViewById(R.id.circle_back);
-
-        // Set text
-
+        TextView textView1 = (TextView)convertView.findViewById(R.id.day_name);
         textView1.setText(NepaliTranslator.getShortDay(position));
-        textView2.setVisibility(View.GONE);
-
-        // Set background and colors
-
-        imageView.setVisibility(View.GONE);
-        textView1.setBackgroundResource(R.drawable.border_bottom);
 
         if (position == 6)
             textView1.setTextColor(ThemeUtils.getThemeColor(mContext,

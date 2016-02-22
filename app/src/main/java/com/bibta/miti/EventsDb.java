@@ -45,6 +45,7 @@ public class EventsDb extends SQLiteOpenHelper {
         values.put("month", month);
         values.put("day", day);
         db.insert("events", null, values);
+        db.close();
     }
 
     public void update(long id, String title, String details, int type, int year, int month, int day) {
@@ -57,20 +58,27 @@ public class EventsDb extends SQLiteOpenHelper {
         values.put("month", month);
         values.put("day", day);
         db.update("events", values, "id=?", new String[]{id + ""});
+        db.close();
     }
 
     public Cursor get(long id) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT * FROM events WHERE id=?", new String[]{id+""});
+        Cursor c = db.rawQuery("SELECT * FROM events WHERE id=?", new String[]{id+""});
+        db.close();
+        return c;
     }
 
+    // TODO: Don't return cursor (as it's invalid after closing db. Return Event object instead.
     public Cursor get(String key, String value) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT * FROM events WHERE "+key+"=?", new String[]{value+""});
+        Cursor c = db.rawQuery("SELECT * FROM events WHERE "+key+"=?", new String[]{value+""});
+        db.close();
+        return c;
     }
 
     public void delete(long id) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("events", "id=?", new String[]{id+""});
+        db.close();
     }
 }

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup calendar pages
 
-        ViewPager viewPager = (ViewPager)findViewById(R.id.calendarPager);
+        final ViewPager viewPager = (ViewPager)findViewById(R.id.calendarPager);
         viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(new CalendarPagerAdapter(getSupportFragmentManager()));
 
@@ -58,6 +58,19 @@ public class MainActivity extends AppCompatActivity {
                     .format(Calendar.getInstance().getTime());
             todayEnglishDate.setText(english);
         }
+
+
+
+        // Fetch new tithi data
+        // TODO: May be do this only once in a while
+        new TithiGrabber(this).fetchData(new TithiGrabber.Listener() {
+            @Override
+            public void onNewDataFetched() {
+                int item = viewPager.getCurrentItem();
+                viewPager.setAdapter(new CalendarPagerAdapter(getSupportFragmentManager()));
+                viewPager.setCurrentItem(item);
+            }
+        });
     }
 
     @Override

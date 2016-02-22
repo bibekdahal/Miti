@@ -1,14 +1,19 @@
 package com.bibta.miti;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Adapter to set contents of calendar grid view.
@@ -68,8 +73,9 @@ public class CalendarAdapter extends BaseAdapter {
                     .inflate(R.layout.layout_date, parent, false);
         }
 
-        TextView textView1 = (TextView)convertView.findViewById(R.id.nepaliDate);
-        TextView textView2 = (TextView)convertView.findViewById(R.id.englishDate);
+        TextView nepDate = (TextView)convertView.findViewById(R.id.nepaliDate);
+        TextView engDate = (TextView)convertView.findViewById(R.id.englishDate);
+        TextView tithi = (TextView)convertView.findViewById(R.id.tithi);
         ImageView imageView = (ImageView)convertView.findViewById(R.id.circle_back);
 
         // Set text
@@ -77,30 +83,37 @@ public class CalendarAdapter extends BaseAdapter {
         // Days
         if (position >= mExtraDays) {
             int dt = (position + 1 - mExtraDays);
-            textView1.setText(NepaliTranslator.getNumber(dt + ""));
+            nepDate.setText(NepaliTranslator.getNumber(dt + ""));
 
-            String dt2 = new Date(mDate.year, mDate.month, dt).convertToEnglish().day + "";
-            textView2.setText(dt2);
-            textView2.setVisibility(View.VISIBLE);
+            Date nepaliDate = new Date(mDate.year, mDate.month, dt);
+            String dt2 = nepaliDate.convertToEnglish().day + "";
+            engDate.setText(dt2);
+            engDate.setVisibility(View.VISIBLE);
+            tithi.setVisibility(View.VISIBLE);
+
+            // Get tithi and set tithi text
+            String tithi_text = new TithiDb(mContext).get(nepaliDate.toString());
+            tithi.setText(tithi_text);
         }
         else {
-            textView1.setText("");
-            textView2.setVisibility(View.GONE);
+            nepDate.setText("");
+            engDate.setVisibility(View.GONE);
+            tithi.setVisibility(View.GONE);
         }
 
         // Set background and colors
 
 
         if (position % 7 == 6) {
-            textView1.setTextColor(ThemeUtils.getThemeColor(mContext,
+            nepDate.setTextColor(ThemeUtils.getThemeColor(mContext,
                     android.R.attr.textColorTertiary));
-            textView2.setTextColor(ThemeUtils.getThemeColor(mContext,
+            engDate.setTextColor(ThemeUtils.getThemeColor(mContext,
                     android.R.attr.textColorTertiary));
         }
         else {
-            textView1.setTextColor(ThemeUtils.getThemeColor(mContext,
+            nepDate.setTextColor(ThemeUtils.getThemeColor(mContext,
                     android.R.attr.textColor));
-            textView2.setTextColor(ThemeUtils.getThemeColor(mContext,
+            engDate.setTextColor(ThemeUtils.getThemeColor(mContext,
                     android.R.attr.textColorSecondary));
         }
 
@@ -116,11 +129,10 @@ public class CalendarAdapter extends BaseAdapter {
 
         // Set view height equal to width and text size respectively
 
-        final View finalRootView = convertView;
-        convertView.post(new Runnable() {
+        final View finalRootView = convertView.findViewById(R.id.root);
+        finalRootView.post(new Runnable() {
             @Override
             public void run() {
-
                 // Set height == width
                 ViewGroup.LayoutParams params = finalRootView.getLayoutParams();
                 params.height = finalRootView.getWidth()+2;

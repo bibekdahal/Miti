@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:layout_height="40dp">
-
-    <ImageView
-        android:id="@+id/circle_back"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/circle_mark"/>
+        android:layout_gravity="center"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/circle_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/circle_mark"/>
+
+        <TextView
+            android:id="@+id/nepaliDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:paddingRight="7dp"
+            android:paddingBottom="7dp"
+            android:text="१७"/>
+
+        <TextView
+            android:id="@+id/englishDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|end"
+            android:padding="@dimen/eng_date_padding"
+            android:textSize="11sp"
+            android:text="15"/>
+
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/nepaliDate"
+        android:id="@+id/tithi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="?android:textColorTertiary"
         android:gravity="center"
-        android:textSize="16sp"
-        android:paddingRight="7dp"
-        android:paddingBottom="7dp"
-        android:text="१७"/>
-
-    <TextView
-        android:id="@+id/englishDate"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom|end"
-        android:padding="@dimen/eng_date_padding"
-        android:textSize="11sp"
-        android:text="15"/>
-
-</RelativeLayout>
+        android:text="एकादशी"/>
+</LinearLayout>

@@ -79,10 +79,10 @@ public class Date {
 
     /**
      * Convert to simple string representation of this date.
-     * @return String in format yyyy/MMMM/dd.
+     * @return String in format yyyy-MM-dd.
      */
     @Override
     public String toString() {
-        return year+"/"+month+"/"+day;
+        return String.format("%04d-%02d-%02d", year, month, day);
     }
 }
