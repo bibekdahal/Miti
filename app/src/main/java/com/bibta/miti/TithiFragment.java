@@ -4,25 +4,18 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * Fragment containing a calendar for a particular year and month.
- */
-public class CalendarFragment extends Fragment {
-
-    private CalendarAdapter mAdapter;
-    private GridView mCalendar;
-    private GridView mCalendarHeaders;
+public class TithiFragment extends Fragment {
     private Date mCurrentDate = new Date(2000, 1, 1);
+
+    private TithiAdapter mTithiAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,26 +26,18 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        View view = inflater.inflate(R.layout.fragment_tithi, container, false);
         changeTitle(view);
 
-        // Initialize grid views
+        // Get the recycler view for mitis.
 
-        mAdapter = new CalendarAdapter(getContext(), mCurrentDate);
-        mCalendar = (GridView)view.findViewById(R.id.calendar);
-        mCalendar.setAdapter(mAdapter);
-
-        mCalendarHeaders = (GridView)view.findViewById(R.id.calendar_headers);
-        mCalendarHeaders.setAdapter(new CalendarHeaderAdapter(getContext()));
-
-        // Set vertical spacing of calendar according to display height
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-        int spacing = (int) (metrics.heightPixels / 800f * 17f);
-        mCalendar.setVerticalSpacing(spacing);
-        mCalendarHeaders.setVerticalSpacing(spacing);
+        RecyclerView tithiList = (RecyclerView) view.findViewById(R.id.events_list);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        tithiList.setLayoutManager(llm);
+        mTithiAdapter = new TithiAdapter(getContext());
+        tithiList.setAdapter(mTithiAdapter);
+        refreshMitis();
 
         return view;
     }
@@ -66,17 +51,23 @@ public class CalendarFragment extends Fragment {
 
         String english = getEnglishMonth(eDate1.month) + "/"
                 + getEnglishMonth(eDate2.month);
-        english += " " + eDate1.year + (eDate1.year==eDate2.year?"":"/"+eDate2.year);
+        english += " " + eDate1.year + (eDate1.year == eDate2.year ? "" : "/" + eDate2.year);
 
         String monthYear = nepali + "\n" + english;
-        ((TextView)view.findViewById(R.id.monthYear)).setText(monthYear);
+        ((TextView) view.findViewById(R.id.monthYear)).setText(monthYear);
 
         view.findViewById(R.id.calendar_title).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).toggleCalendar();
+                ((MainActivity) getActivity()).toggleCalendar();
             }
         });
+    }
+
+    private void refreshMitis() {
+        if (mTithiAdapter != null) {
+            mTithiAdapter.setDate(mCurrentDate.year, mCurrentDate.month);
+        }
     }
 
     private static String getEnglishMonth(int month) {
@@ -88,14 +79,13 @@ public class CalendarFragment extends Fragment {
 
     /**
      * Set year and month for this calendar.
-     * @param year Year to display.
+     *
+     * @param year  Year to display.
      * @param month Month to display.
      */
     public void set(int year, int month) {
         mCurrentDate.year = year;
         mCurrentDate.month = month;
-
-        if (mAdapter != null)
-            mAdapter.changeDate(mCurrentDate);
+        refreshMitis();
     }
 }

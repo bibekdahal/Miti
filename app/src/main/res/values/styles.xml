@@ -2,7 +2,6 @@
 
     <!-- Dark theme -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:typeface">serif</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textColorSecondary">@color/secondaryText</item>
@@ -11,7 +10,6 @@
 
     <!-- Light theme -->
     <style name="AlternateAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:typeface">serif</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColor">@color/primaryTextAlternate</item>
         <item name="android:textColorSecondary">@color/secondaryTextAlternate</item>

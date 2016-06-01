@@ -40,21 +40,9 @@
             android:text="@string/greater_than"/>
     </RelativeLayout>
 
-    <GridView
-        android:id="@+id/calendar_headers"
-        android:numColumns="7"
-        android:padding="6dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/events_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </GridView>
-
-    <GridView
-        android:id="@+id/calendar"
-        android:numColumns="7"
-        android:padding="6dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </GridView>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

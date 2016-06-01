@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,15 +53,16 @@ public class TithiGrabber {
 
             String date = element.getString("date");
             String tithi = element.getString("tithi");
+            String extra = element.getString("extra");
 
             // Check if date exists and update if it does.
             // Insert new if it doesn't.
 
-            String c = db.get(date);
-            if (c.equals(""))
-                db.insert(date, tithi);
+            Pair<String, String> pair = db.get(date);
+            if (pair == null)
+                db.insert(date, tithi, extra);
             else
-                db.update(date, tithi);
+                db.update(date, tithi, extra);
         }
     }
 

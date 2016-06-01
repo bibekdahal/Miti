@@ -12,8 +12,8 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical"
+        android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -24,7 +24,7 @@
             android:background="#B000">
 
             <TextView
-                android:id="@+id/engDate"
+                android:id="@+id/nepDate"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
@@ -34,15 +34,38 @@
                 android:textColor="#FFF"/>
 
             <TextView
-                android:id="@+id/engMonthYear"
+                android:id="@+id/nepMonthYear"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="start|center"
                 android:typeface="serif"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="#FFF"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tithi"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:background="#3000"
+            android:typeface="serif"
+            android:textSize="14sp"
+            android:textColor="#FFF"/>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/day"
@@ -53,26 +76,6 @@
             android:typeface="serif"
             android:textSize="14sp"
             android:textColor="#FFF"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:gravity="center"
-            android:background="#3000"
-            android:typeface="serif"
-            android:textSize="14sp"
-            android:textColor="#FFF"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,16 +84,17 @@
             android:background="#B000">
 
             <TextView
-                android:id="@+id/nepMonthYear"
+                android:id="@+id/engMonthYear"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="end|center"
                 android:typeface="serif"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#FFF"/>
+
             <TextView
-                android:id="@+id/nepDate"
+                android:id="@+id/engDate"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"

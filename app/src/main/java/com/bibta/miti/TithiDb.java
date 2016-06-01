@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+import android.util.Pair;
 
 /**
  * Nepali Tithi Database.
@@ -15,7 +15,7 @@ public class TithiDb extends SQLiteOpenHelper{
     /// Database name.
     public static final String DATABASE_NAME = "Tithi.db";
     /// Database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     /**
      * Create Tithi Database Helper.
@@ -33,7 +33,8 @@ public class TithiDb extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE tithi (" +
                         "date TEXT PRIMARY KEY, " +
-                        "tithi TEXT" +
+                        "tithi TEXT, " +
+                        "extra TEXT" +
                         ")"
         );
     }
@@ -63,12 +64,14 @@ public class TithiDb extends SQLiteOpenHelper{
      * Insert new tithi data.
      * @param date Date for which tithi is being inserted.
      * @param tithi Tithi for the date.
+     * @param extra Extra information on the date.
      */
-    public void insert(String date, String tithi) {
+    public void insert(String date, String tithi, String extra) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("date", date);
         values.put("tithi", tithi);
+        values.put("extra", extra);
         db.insert("tithi", null, values);
         db.close();
     }
@@ -77,11 +80,13 @@ public class TithiDb extends SQLiteOpenHelper{
      * Update tithi data for a date.
      * @param date Date for which tithi is to be updated.
      * @param tithi New tithi for the date.
+     * @param extra Extra information on the date.
      */
-    public void update(String date, String tithi) {
+    public void update(String date, String tithi, String extra) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tithi", tithi);
+        values.put("extra", extra);
         db.update("tithi", values, "date=?", new String[]{date});
         db.close();
     }
@@ -89,11 +94,12 @@ public class TithiDb extends SQLiteOpenHelper{
     /**
      * Get tithi data for a date.
      * @param date Date for which tithi is to be obtained.
-     * @return Tithi at the row which have given date.
+     * @return A pair of strings (tithi, extra) for given date.
      */
-    public String get(String date) {
+    public Pair<String, String> get(String date) {
         SQLiteDatabase db = getReadableDatabase();
-        String c = getTithi(db.rawQuery("SELECT * FROM tithi WHERE date=?", new String[]{date}));
+        Pair<String, String> c = getTithi(db.rawQuery("SELECT * FROM tithi WHERE date=?",
+                new String[]{date}));
         db.close();
         return c;
     }
@@ -108,10 +114,13 @@ public class TithiDb extends SQLiteOpenHelper{
         db.close();
     }
 
-    private static String getTithi(Cursor cursor) {
+    private static Pair<String, String> getTithi(Cursor cursor) {
         if (cursor.getCount() == 0)
-            return "";
+            return null;
         cursor.moveToFirst();
-        return cursor.getString(cursor.getColumnIndex("tithi"));
+        return new Pair<>(
+                cursor.getString(cursor.getColumnIndex("tithi")),
+                cursor.getString(cursor.getColumnIndex("extra"))
+        );
     }
 }

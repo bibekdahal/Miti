@@ -65,18 +65,31 @@ public class CalendarAdapter extends BaseAdapter {
         return 0;
     }
 
+    private class ViewHolder {
+        TextView nepDate;
+        TextView engDate;
+        ImageView imageView;
+    }
+
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
-
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext)
                     .inflate(R.layout.layout_date, parent, false);
-        }
+            holder = new ViewHolder();
 
-        TextView nepDate = (TextView)convertView.findViewById(R.id.nepaliDate);
-        TextView engDate = (TextView)convertView.findViewById(R.id.englishDate);
-        TextView tithi = (TextView)convertView.findViewById(R.id.tithi);
-        ImageView imageView = (ImageView)convertView.findViewById(R.id.circle_back);
+            holder.nepDate = (TextView)convertView.findViewById(R.id.nepaliDate);
+            holder.engDate = (TextView)convertView.findViewById(R.id.englishDate);
+            holder.imageView = (ImageView)convertView.findViewById(R.id.circle_back);
+
+            convertView.setTag(holder);
+        } else
+            holder = (ViewHolder)convertView.getTag();
+
+        TextView nepDate = holder.nepDate;
+        TextView engDate = holder.engDate;
+        ImageView imageView = holder.imageView;
 
         // Set text
 
@@ -89,16 +102,10 @@ public class CalendarAdapter extends BaseAdapter {
             String dt2 = nepaliDate.convertToEnglish().day + "";
             engDate.setText(dt2);
             engDate.setVisibility(View.VISIBLE);
-            tithi.setVisibility(View.VISIBLE);
-
-            // Get tithi and set tithi text
-            String tithi_text = new TithiDb(mContext).get(nepaliDate.toString());
-            tithi.setText(tithi_text);
         }
         else {
             nepDate.setText("");
             engDate.setVisibility(View.GONE);
-            tithi.setVisibility(View.GONE);
         }
 
         // Set background and colors
@@ -129,7 +136,7 @@ public class CalendarAdapter extends BaseAdapter {
 
         // Set view height equal to width and text size respectively
 
-        final View finalRootView = convertView.findViewById(R.id.root);
+        final View finalRootView = convertView;
         finalRootView.post(new Runnable() {
             @Override
             public void run() {

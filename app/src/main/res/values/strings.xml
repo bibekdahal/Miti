@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Miti</string>
     <string name="app_name_nepali">मिति</string>
-    <string name="less_than"><![CDATA[<]]></string>
-    <string name="greater_than"><![CDATA[>]]></string>
+    <string name="less_than">〈</string>
+    <string name="greater_than">〉</string>
 </resources>

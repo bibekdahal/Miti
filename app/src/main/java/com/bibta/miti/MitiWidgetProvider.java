@@ -8,9 +8,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.util.Pair;
 import android.widget.RemoteViews;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -26,10 +26,6 @@ public class MitiWidgetProvider extends AppWidgetProvider {
      */
     public static void updateWidget(Context context, RemoteViews remoteViews) {
         Calendar calendar = Calendar.getInstance();
-
-        // time
-        String time = new SimpleDateFormat("hh:mm a", Locale.US).format(calendar.getTime());
-        remoteViews.setTextViewText(R.id.time, time);
 
         // english date
         String engDate = calendar.get(Calendar.DAY_OF_MONTH)+"";
@@ -48,6 +44,11 @@ public class MitiWidgetProvider extends AppWidgetProvider {
                 NepaliTranslator.getNumber(nepDate.year + "");
         remoteViews.setTextViewText(R.id.nepMonthYear, nepMonthYear);
         remoteViews.setTextViewText(R.id.nepDate, NepaliTranslator.getNumber(nepDate.day + ""));
+
+        // tithi
+        String date_str = String.format("%04d-%02d-%02d", nepDate.year, nepDate.month, nepDate.day);
+        Pair<String, String> tithi = new TithiDb(context).get(date_str);
+        remoteViews.setTextViewText(R.id.tithi, tithi.first);
 
 
         // Set alarm to update in next minute

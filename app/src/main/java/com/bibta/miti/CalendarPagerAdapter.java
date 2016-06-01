@@ -8,17 +8,25 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  * Pager adapter for displaying all supported calendar months.
  */
 public class CalendarPagerAdapter extends FragmentStatePagerAdapter {
-    public CalendarPagerAdapter(FragmentManager manager) {
+    int type;
+    public CalendarPagerAdapter(FragmentManager manager, int type) {
         super(manager);
+        this.type = type;
     }
 
     @Override
     public Fragment getItem(int position) {
         int year = position/12 + DateUtils.startNepaliYear;
         int month = position%12 + 1;
-        CalendarFragment cf = new CalendarFragment();
-        cf.set(year, month);
-        return cf;
+        if (type == 0) {
+            CalendarFragment cf = new CalendarFragment();
+            cf.set(year, month);
+            return cf;
+        } else {
+            TithiFragment tf = new TithiFragment();
+            tf.set(year, month);
+            return tf;
+        }
     }
 
     @Override

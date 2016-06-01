@@ -39,21 +39,26 @@ public class CalendarHeaderAdapter extends BaseAdapter {
         return 0;
     }
 
+
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
+        TextView textView;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext)
                     .inflate(R.layout.layout_date_header, parent, false);
-        }
 
-        TextView textView1 = (TextView)convertView.findViewById(R.id.day_name);
-        textView1.setText(NepaliTranslator.getShortDay(position));
+            textView = (TextView)convertView.findViewById(R.id.day_name);
+            convertView.setTag(textView);
+        } else
+            textView = (TextView)convertView.getTag();
+
+        textView.setText(NepaliTranslator.getShortDay(position));
 
         if (position == 6)
-            textView1.setTextColor(ThemeUtils.getThemeColor(mContext,
+            textView.setTextColor(ThemeUtils.getThemeColor(mContext,
                     android.R.attr.textColorTertiary));
         else
-            textView1.setTextColor(ThemeUtils.getThemeColor(mContext, android.R.attr.textColor));
+            textView.setTextColor(ThemeUtils.getThemeColor(mContext, android.R.attr.textColor));
 
         return convertView;
     }

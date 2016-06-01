@@ -16,6 +16,7 @@ import java.util.Locale;
  * The start-up activity.
  */
 public class MainActivity extends AppCompatActivity {
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Setup calendar pages
-
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.calendarPager);
-        viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new CalendarPagerAdapter(getSupportFragmentManager()));
+        mViewPager = (ViewPager)findViewById(R.id.calendarPager);
+        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setAdapter(new CalendarPagerAdapter(getSupportFragmentManager(), 0));
 
         Date today = new Date(Calendar.getInstance()).convertToNepali();
-        viewPager.setCurrentItem(
+        mViewPager.setCurrentItem(
                 (today.year - DateUtils.startNepaliYear) * 12 + (today.month - 1)
         );
 
@@ -61,14 +61,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Fetch new tithi data
-        // TODO: May be do this only once in a while
+        // Fetch new tithi data.
         new TithiGrabber(this).fetchData(new TithiGrabber.Listener() {
             @Override
             public void onNewDataFetched() {
-                int item = viewPager.getCurrentItem();
-                viewPager.setAdapter(new CalendarPagerAdapter(getSupportFragmentManager()));
-                viewPager.setCurrentItem(item);
+                /*int item = viewPager.getCurrentItem();
+                try {
+                    viewPager.setAdapter(new CalendarPagerAdapter(getSupportFragmentManager()));
+                } catch (IllegalStateException ex) {
+                    ex.printStackTrace();
+                }
+                viewPager.setCurrentItem(item);*/
             }
         });
     }
@@ -84,4 +87,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private int currentType = 0;
+    public void toggleCalendar() {
+        currentType = 1 - currentType;
+
+        if (mViewPager != null) {
+            int currentItem = mViewPager.getCurrentItem();
+            mViewPager.setAdapter(new CalendarPagerAdapter(getSupportFragmentManager(),
+                    currentType));
+            mViewPager.setCurrentItem(currentItem);
+        }
+    }
 }
